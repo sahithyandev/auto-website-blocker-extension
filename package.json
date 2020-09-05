@@ -1,0 +1,18 @@
+{
+  "name": "typescript-web-extension-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack -w",
+    "test-build": "rm -R dist && npm run build"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^6.1.0",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
