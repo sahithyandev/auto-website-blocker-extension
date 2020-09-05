@@ -1,8 +1,17 @@
 {
     "manifest_version": 2,
-    "name": "Testing",
+    "name": "Auto Website Blocker",
+    "description": "A website extension, whcih lets you block websites automatically, based on time.",
     "version": "1.0",
-    "content_scripts": [
-        { "matches": ["<all_urls>"], "js": ["src/content_script.js"] }
+    "background": {
+        "scripts": ["src/background.js"]
+    },
+    "permissions": [
+        "menus",
+        "webRequest",
+        "<all_urls>",
+        "webRequestBlocking",
+        "storage",
+        "notifications"
     ]
 }

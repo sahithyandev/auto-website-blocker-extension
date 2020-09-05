@@ -1,4 +1,14 @@
 {
-    "include": ["src/"],
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "rootDir": "src",
+        "outDir": "dist/src", 
+        "noEmitOnError": true,
+        "lib": [ "es2015", "dom", "es2017"],
+        "typeRoots": ["node_modules/web-ext-types"]
+    },
     "exclude": ["node_modules"]
 }

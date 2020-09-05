@@ -81,20 +81,68 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/background.ts");
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ "./src/background.ts":
-/*!***************************!*\
-  !*** ./src/background.ts ***!
-  \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+"use strict";
 
-eval("\n\n//# sourceURL=webpack:///./src/background.ts?");
+Object.defineProperty(exports, "__esModule", { value: true });
+var MenuID = {
+    PermanentWebsiteBlock: "permanent-website-block"
+};
+// Functions needed
+function notify(options) {
+    browser.notifications.create(options.id, {
+        type: options.type || 'basic',
+        title: options.title,
+        message: options.message,
+    });
+}
+function cancelRequest(details) {
+    console.log('blocking', details.url);
+    notify({
+        id: 'info',
+        type: 'basic',
+        title: 'Request blocked by Auto Website Blocker',
+        message: "A web request to " + details.url + " has been canceled by the Auto Website Blocker extension"
+    });
+    return { cancel: true };
+}
+browser.menus.create({
+    id: MenuID.PermanentWebsiteBlock,
+    title: "Block this website",
+    contexts: ["all"],
+    type: 'radio'
+});
+// Listeners
+browser.menus.onClicked.addListener(function (info, tab) {
+    console.log(info, tab);
+    if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
+        var key_1 = info.menuItemId;
+        var url_1 = info.pageUrl;
+        browser.storage.local.get(key_1).then(function (results) {
+            var _a;
+            var newArr = results[key_1] || [];
+            newArr.push(url_1);
+            browser.storage.local.set((_a = {},
+                _a[key_1] = newArr,
+                _a));
+        });
+    }
+});
+browser.storage.onChanged.addListener(function (changes, area) {
+    console.log(changes, area);
+});
+browser.webRequest.onBeforeRequest.addListener(cancelRequest, {
+    // urls: ["<all_urls>"]
+    urls: ["*://*.facebook.com/*"]
+}, ['blocking']);
+console.log('loadied');
+
 
 /***/ })
-
-/******/ });
+/******/ ]);

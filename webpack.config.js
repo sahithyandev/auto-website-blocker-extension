@@ -1,9 +1,10 @@
+const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const getFile = fileName => path.join(__dirname, `src/${fileName}.ts`);
 
 module.exports = {
-    mode: "development",
+    mode: "none",
     entry: {
         background: getFile('background')
     },
@@ -23,5 +24,8 @@ module.exports = {
                 { from: "assets", to: "../" }
             ]
         })
-    ]
+    ],
+    resolve: {
+        extensions: [".ts"]
+    }
 }
