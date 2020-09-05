@@ -5,8 +5,7 @@ const getFile = fileName => path.join(__dirname, `src/${fileName}.ts`);
 module.exports = {
     mode: "development",
     entry: {
-        background: getFile('background'),
-        content_script: getFile('content_script')
+        background: getFile('background')
     },
     output: {
         path: path.join(__dirname, "dist/src"),
