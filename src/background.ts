@@ -1,11 +1,11 @@
 
 // Imports
+import * as dayjs from 'dayjs';
 import { NotificationOptions, webRequestArg } from './types/types';
+import { MenuID } from './consts';
+import { StorageManager } from './types/storageManager';
 
-const MenuID = {
-  PermanentWebsiteBlock: "permanent-website-block"
-}
-
+const storageManager = new StorageManager();
 // Functions needed
 function notify(options: NotificationOptions) {
   browser.notifications.create(options.id, {
