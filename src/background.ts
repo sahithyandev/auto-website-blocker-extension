@@ -41,13 +41,14 @@ browser.menus.onClicked.addListener((info, tab) => {
   if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
     let key = info.menuItemId as string;
     let url = info.pageUrl;
-    browser.storage.local.get(key).then(results=>{
-      let newArr = results[key] as string[] || []
-      newArr.push(url)
-      browser.storage.local.set({
-        [key]: newArr
-      })
-    })
+    // browser.storage.local.get(key).then(results=>{
+    //   let newArr = results[key] as string[] || []
+    //   newArr.push(url)
+    //   browser.storage.local.set({
+    //     [key]: newArr
+    //   })
+    // })
+    storageManager.addToArray(key, url);
   }
 })
 

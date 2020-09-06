@@ -91,9 +91,9 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var MenuID = {
-    PermanentWebsiteBlock: "permanent-website-block"
-};
+var consts_1 = __webpack_require__(1);
+var storageManager_1 = __webpack_require__(2);
+var storageManager = new storageManager_1.StorageManager();
 // Functions needed
 function notify(options) {
     browser.notifications.create(options.id, {
@@ -113,7 +113,7 @@ function cancelRequest(details) {
     return { cancel: true };
 }
 browser.menus.create({
-    id: MenuID.PermanentWebsiteBlock,
+    id: consts_1.MenuID.PermanentWebsiteBlock,
     title: "Block this website",
     contexts: ["all"],
     type: 'radio'
@@ -121,17 +121,17 @@ browser.menus.create({
 // Listeners
 browser.menus.onClicked.addListener(function (info, tab) {
     console.log(info, tab);
-    if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
-        var key_1 = info.menuItemId;
-        var url_1 = info.pageUrl;
-        browser.storage.local.get(key_1).then(function (results) {
-            var _a;
-            var newArr = results[key_1] || [];
-            newArr.push(url_1);
-            browser.storage.local.set((_a = {},
-                _a[key_1] = newArr,
-                _a));
-        });
+    if (info.menuItemId == consts_1.MenuID.PermanentWebsiteBlock) {
+        var key = info.menuItemId;
+        var url = info.pageUrl;
+        // browser.storage.local.get(key).then(results=>{
+        //   let newArr = results[key] as string[] || []
+        //   newArr.push(url)
+        //   browser.storage.local.set({
+        //     [key]: newArr
+        //   })
+        // })
+        storageManager.addToArray(key, url);
     }
 });
 browser.storage.onChanged.addListener(function (changes, area) {
@@ -142,6 +142,67 @@ browser.webRequest.onBeforeRequest.addListener(cancelRequest, {
     urls: ["*://*.facebook.com/*"]
 }, ['blocking']);
 console.log('loadied');
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MenuID = void 0;
+exports.MenuID = {
+    PermanentWebsiteBlock: "permanent-website-block"
+};
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StorageManager = void 0;
+var consts_1 = __webpack_require__(1);
+/**
+ * @important Not ready for use
+*/
+var StorageManager = /** @class */ (function () {
+    function StorageManager() {
+        var _a;
+        var _this = this;
+        this.storageObj = (_a = {},
+            _a[consts_1.MenuID.PermanentWebsiteBlock] = [],
+            _a);
+        browser.storage.local.get().then(function (result) {
+            if (Object.keys(result).length != 0) {
+                _this.storageObj.permanentBlockedWebsites = result.permanentBlockedWebsites;
+            }
+        }).then(function () { console.log(_this.storageObj.permanentBlockedWebsites); });
+    }
+    /**
+     *
+     * @param key Key of the array
+     * @param value value to add into the array
+     */
+    StorageManager.prototype.addToArray = function (key, value) {
+        var _a;
+        console.log('aaaa', this, key);
+        /** @important @todo Change this variable name */
+        var x = this.storageObj[key];
+        if (x && x instanceof Array) {
+            x.push(value);
+            browser.storage.local.set((_a = {},
+                _a[key] = this.storageObj[key],
+                _a));
+        }
+        console.log(this.storageObj.permanentBlockedWebsites, x);
+    };
+    return StorageManager;
+}());
+exports.StorageManager = StorageManager;
 
 
 /***/ })

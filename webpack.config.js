@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
 const getFile = fileName => path.join(__dirname, `src/${fileName}.ts`);
 
 module.exports = {
@@ -23,6 +24,9 @@ module.exports = {
             patterns: [
                 { from: "assets", to: "../" }
             ]
+        }),
+        new WebExtWebpackPlugin({
+            sourceDir: "./dist/"
         })
     ],
     resolve: {
