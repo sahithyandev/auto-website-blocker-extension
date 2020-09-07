@@ -11,7 +11,7 @@ export class StorageManager {
     }
 
     constructor() {
-        throw "NOOOO. You can't use StorageManager now";
+        // throw "NOOOO. You can't use StorageManager now";
         browser.storage.local.get().then(result => {
             if (Object.keys(result).length != 0) {
                 this.storageObj.permanentBlockedWebsites = result.permanentBlockedWebsites as unknown as BlockedItem[];
@@ -35,5 +35,32 @@ export class StorageManager {
             })
         }
         console.log(this.storageObj.permanentBlockedWebsites, x);
+    }
+
+    /**
+     * Checks if a value is alread in the array
+     * @param key Key of the array
+     * @param value value to check if it is in the array
+     */
+    isInArray(key: string, value: any) {
+        let x = this.storageObj[key];
+        /** @todo Improve `more readable` error messages */
+        if (x == undefined) throw 'Key not found';
+        if (!(x instanceof Array)) throw 'Key is not an array';
+        if (x && x instanceof Array) {
+            return x.findIndex(value) > 0;
+        }
+    }
+
+    /**
+     * Removes a value from an array
+     * @important @todo Not developed yet
+     * @param key Key of the array
+     * @param value value to remove from array
+     */
+    removeFromArray(key: string, value: any) {
+        let x = this.storageObj[key];
+        if (x == undefined) throw 'Key not found';
+        if (!(x instanceof Array)) throw 'Key is not an array';
     }
 }

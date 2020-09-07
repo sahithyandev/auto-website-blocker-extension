@@ -40,6 +40,7 @@ browser.menus.onClicked.addListener((info, tab) => {
   console.log(info, tab);
   if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
     let key = info.menuItemId as string;
+    /** @todo Extract the website-base-url from the absolute url */
     let url = info.pageUrl;
     // browser.storage.local.get(key).then(results=>{
     //   let newArr = results[key] as string[] || []
@@ -48,6 +49,9 @@ browser.menus.onClicked.addListener((info, tab) => {
     //     [key]: newArr
     //   })
     // })
+    if (storageManager.isInArray(key, url)) {
+      storageManager.removeFromArray(key, url);
+    }
     storageManager.addToArray(key, url);
   }
 })
@@ -56,6 +60,7 @@ browser.storage.onChanged.addListener((changes,area) => {
   console.log(changes, area);
 })
 
+/** @todo Listen to websites that are blocked only */
 browser.webRequest.onBeforeRequest.addListener(cancelRequest, {
     // urls: ["<all_urls>"]
     urls: ["*://*.facebook.com/*"]
