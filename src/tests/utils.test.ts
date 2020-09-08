@@ -15,7 +15,7 @@ const extractURLTests = [
     { input: "wss://secure.mozilla.org/something", output: "*://*.mozilla.org/*" }
 ] 
 
-describe("url-extractor", () => {
+describe("URLExtractor", () => {
     for (let test of extractURLTests) {
         it(`extractURL(${test.input})`, () => {
             let result = extractURL(test.input);
