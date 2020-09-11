@@ -92,8 +92,10 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var consts_1 = __webpack_require__(1);
-var storageManager_1 = __webpack_require__(2);
-var storageManager = new storageManager_1.StorageManager();
+var utils_1 = __webpack_require__(2);
+var storageObj = {
+    "permanent-website-block": []
+};
 // Functions needed
 function notify(options) {
     browser.notifications.create(options.id, {
@@ -112,6 +114,37 @@ function cancelRequest(details) {
     });
     return { cancel: true };
 }
+/**
+ * Checks whether a request should be cancelled or not
+ */
+function checkRequest(details) {
+    console.log({
+        x: storageObj["permanent-website-block"],
+        s: utils_1.extractURL(details.url)
+    });
+    if (storageObj["permanent-website-block"].includes(utils_1.extractURL(details.url))) {
+        return cancelRequest(details);
+    }
+}
+/**
+ * Adds a specific URL to the list of "Permanently Blocked Websites"
+ * @param url URL
+ */
+function addToBlockedWebsites(url) {
+    var _a;
+    var key = "permanent-website-block";
+    storageObj[key].push(url);
+    console.log(storageObj);
+    browser.storage.local.set((_a = {},
+        _a[key] = storageObj[key],
+        _a));
+}
+/**
+ * @todo Develop this function
+ * @param url URL to remove
+ */
+function removeFromBlockedWebsites(url) {
+}
 browser.menus.create({
     id: consts_1.MenuID.PermanentWebsiteBlock,
     title: "Block this website",
@@ -122,25 +155,31 @@ browser.menus.create({
 browser.menus.onClicked.addListener(function (info, tab) {
     console.log(info, tab);
     if (info.menuItemId == consts_1.MenuID.PermanentWebsiteBlock) {
-        var key = info.menuItemId;
-        var url = info.pageUrl;
-        // browser.storage.local.get(key).then(results=>{
-        //   let newArr = results[key] as string[] || []
-        //   newArr.push(url)
-        //   browser.storage.local.set({
-        //     [key]: newArr
-        //   })
-        // })
-        storageManager.addToArray(key, url);
+        var url = utils_1.extractURL(info.pageUrl);
+        addToBlockedWebsites(url);
+        // if (storageManager.isInArray(key, url)) {
+        //   storageManager.removeFromArray(key, url);
+        // }
+        // storageManager.addToArray(key, url);
     }
 });
-browser.storage.onChanged.addListener(function (changes, area) {
-    console.log(changes, area);
-});
-browser.webRequest.onBeforeRequest.addListener(cancelRequest, {
-    // urls: ["<all_urls>"]
-    urls: ["*://*.facebook.com/*"]
+/** @todo Listen to websites that are blocked only */
+browser.webRequest.onBeforeRequest.addListener(checkRequest, {
+    urls: ["<all_urls>"]
 }, ['blocking']);
+browser.runtime.onInstalled.addListener(function () {
+    console.log('onInstalled event');
+    browser.storage.local.get(consts_1.MenuID.PermanentWebsiteBlock).then(function (value) {
+        console.log(value);
+        if (Object.keys(value).length == 0) {
+            storageObj["permanent-website-block"] = [];
+        }
+        else {
+            storageObj["permanent-website-block"] = value["permanent-website-block"];
+        }
+        console.log(storageObj);
+    });
+});
 console.log('loadied');
 
 
@@ -164,45 +203,25 @@ exports.MenuID = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StorageManager = void 0;
-var consts_1 = __webpack_require__(1);
+exports.extractURL = void 0;
 /**
- * @important Not ready for use
-*/
-var StorageManager = /** @class */ (function () {
-    function StorageManager() {
-        var _a;
-        var _this = this;
-        this.storageObj = (_a = {},
-            _a[consts_1.MenuID.PermanentWebsiteBlock] = [],
-            _a);
-        browser.storage.local.get().then(function (result) {
-            if (Object.keys(result).length != 0) {
-                _this.storageObj.permanentBlockedWebsites = result.permanentBlockedWebsites;
-            }
-        }).then(function () { console.log(_this.storageObj.permanentBlockedWebsites); });
-    }
-    /**
-     *
-     * @param key Key of the array
-     * @param value value to add into the array
-     */
-    StorageManager.prototype.addToArray = function (key, value) {
-        var _a;
-        console.log('aaaa', this, key);
-        /** @important @todo Change this variable name */
-        var x = this.storageObj[key];
-        if (x && x instanceof Array) {
-            x.push(value);
-            browser.storage.local.set((_a = {},
-                _a[key] = this.storageObj[key],
-                _a));
-        }
-        console.log(this.storageObj.permanentBlockedWebsites, x);
-    };
-    return StorageManager;
-}());
-exports.StorageManager = StorageManager;
+ * Extract the absolute URL path to a general one
+ * @param absolutePath The URL path to extract
+ */
+exports.extractURL = function (absolutePath) {
+    if (absolutePath == '')
+        return '';
+    var url = new URL(absolutePath);
+    return "*://*." + extractHostname(url.host).join('.') + "/*";
+};
+/**
+ * Extracts the absolute hostname of a URL.hostname property
+ * @param hostname hostname to extract
+ */
+var extractHostname = function (hostname) {
+    var parts = hostname.split('.');
+    return parts.slice(parts.length - 2, parts.length);
+};
 
 
 /***/ })

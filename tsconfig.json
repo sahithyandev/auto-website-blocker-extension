@@ -8,8 +8,7 @@
         "outDir": "dist/src", 
         "noEmitOnError": true,
         "lib": [ "es2015", "dom", "es2017"],
-        "types": ["intern"],
-        "typeRoots": ["node_modules/web-ext-types"]
+        "types": ["intern", "web-ext-types"]
     },
     "exclude": ["node_modules"]
 }

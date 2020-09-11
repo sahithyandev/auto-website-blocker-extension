@@ -8,7 +8,9 @@ You can't use it yet.
 
 ## Contributing
 
-For now, star it, if you want to contribute.
+For now, star it.
+
+And if you want to contribute to this extension, do anything to improve this project and explain what you did in your pull request.
 
 ## Development
 

@@ -7,7 +7,8 @@
     "build": "webpack",
     "dev": "webpack -w",
     "test-build": "rm -R dist && npm run build",
-    "test": "intern"
+    "test": "intern",
+    "ext": "cd ./dist/ && web-ext run"
   },
   "devDependencies": {
     "@ianwalter/web-ext-webpack-plugin": "^0.1.0",
