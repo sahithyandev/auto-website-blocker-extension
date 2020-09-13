@@ -1,0 +1,31 @@
+body {
+    margin: 12px 18px;
+    font-family: Roboto;
+    width: 360px;
+
+    min-height: 480px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.blocked-website-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(226, 226, 226);
+    border-radius: 4px;
+    margin: 5px;
+
+    .website-url, .delete-button {
+        padding: 4px 8px;
+    }
+    
+    .delete-button {
+        border-radius: inherit;
+        background-color: rgb(219, 66, 66);
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+    }
+}

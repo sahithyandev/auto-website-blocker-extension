@@ -57,6 +57,7 @@ function addToBlockedWebsites(url: string) {
 }
 
 /**
+ * Removes a URL from the list of "Permanently Blocked Websites"
  * @param url URL to remove
  */
 function removeFromBlockedWebsites(url: string) {
@@ -101,6 +102,11 @@ browser.webRequest.onBeforeRequest.addListener(checkRequest, {
 
 browser.runtime.onInstalled.addListener(() => {
   console.log('onInstalled event');
+
+  // for testing
+  browser.storage.local.set({[MenuID.PermanentWebsiteBlock]: ["*://*.facebook.com/*", "*://*.youtube.com/*"]})
+
+
   browser.storage.local.get(MenuID.PermanentWebsiteBlock).then((value) => {
     console.log(value);
     if (Object.keys(value).length == 0) {

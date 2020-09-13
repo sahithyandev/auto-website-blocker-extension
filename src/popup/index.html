@@ -6,9 +6,21 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    
+    <!-- @todo Add this button
+    <button>Block current website</button>
+    -->
+
     <h3>Blocked Websites</h3>
 
-    <div class="container" id="permanent-blocked-websites-container">
+    <template id="blocked-website-template">
+        <div class="blocked-website-item">
+            <div class="website-url"></div>
+            <div class="delete-button">DELETE</div>
+        </div>
+    </template>
+    
+    <div class="blocked-website-container" id="permanent-blocked-websites-container">
 
     </div>
 

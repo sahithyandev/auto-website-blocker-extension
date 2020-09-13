@@ -140,6 +140,7 @@ function addToBlockedWebsites(url) {
         _a));
 }
 /**
+ * Removes a URL from the list of "Permanently Blocked Websites"
  * @param url URL to remove
  */
 function removeFromBlockedWebsites(url) {
@@ -178,7 +179,10 @@ browser.webRequest.onBeforeRequest.addListener(checkRequest, {
     urls: ["<all_urls>"]
 }, ['blocking']);
 browser.runtime.onInstalled.addListener(function () {
+    var _a;
     console.log('onInstalled event');
+    // for testing
+    browser.storage.local.set((_a = {}, _a[consts_1.MenuID.PermanentWebsiteBlock] = ["*://*.facebook.com/*", "*://*.youtube.com/*"], _a));
     browser.storage.local.get(consts_1.MenuID.PermanentWebsiteBlock).then(function (value) {
         console.log(value);
         if (Object.keys(value).length == 0) {
