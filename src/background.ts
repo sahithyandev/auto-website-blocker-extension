@@ -57,10 +57,19 @@ function addToBlockedWebsites(url: string) {
 }
 
 /**
- * @todo Develop this function
  * @param url URL to remove
  */
 function removeFromBlockedWebsites(url: string) {
+  if (url == undefined) return 'URL undefined';
+  let key = "permanent-website-block";
+  let newArr = [];
+  
+  for (let blockedURL of storageObj[key]) {
+    if (blockedURL != url) newArr.push(blockedURL);
+  }
+  
+  storageObj[key] = newArr;
+  console.log('after delete', storageObj);
 }
 
 browser.menus.create({

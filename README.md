@@ -2,6 +2,8 @@
 
 Let you block websites automatically, based on time.
 
+If you find any problems with this repository, just create an issue with the basic info needed. OR contact me @ [sahithyan2701@gmail.com](mailto:sahithyan2701@gmail.com)
+
 ## Features
 
 You can't use it yet.

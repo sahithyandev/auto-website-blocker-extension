@@ -6,6 +6,10 @@
     "background": {
         "scripts": ["src/background.js"]
     },
+    "browser_action": {
+        "browser_style": true,
+        "default_popup": "popup/index.html"
+    },
     "permissions": [
         "menus",
         "webRequest",

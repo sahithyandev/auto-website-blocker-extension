@@ -140,10 +140,20 @@ function addToBlockedWebsites(url) {
         _a));
 }
 /**
- * @todo Develop this function
  * @param url URL to remove
  */
 function removeFromBlockedWebsites(url) {
+    if (url == undefined)
+        return 'URL undefined';
+    var key = "permanent-website-block";
+    var newArr = [];
+    for (var _i = 0, _a = storageObj[key]; _i < _a.length; _i++) {
+        var blockedURL = _a[_i];
+        if (blockedURL != url)
+            newArr.push(blockedURL);
+    }
+    storageObj[key] = newArr;
+    console.log('after delete', storageObj);
 }
 browser.menus.create({
     id: consts_1.MenuID.PermanentWebsiteBlock,

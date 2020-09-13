@@ -1,4 +1,5 @@
 export { NotificationOptions } from './notificationOptions';
+export { Test } from './test';
 
 /**
  * @todo @important Find a suitable name for this interface

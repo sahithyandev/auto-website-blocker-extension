@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
+// const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
 const getFile = fileName => path.join(__dirname, `src/${fileName}.ts`);
 
 module.exports = {
@@ -22,12 +22,14 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                { from: "assets", to: "../" }
+                { from: "assets", to: "../" },
+                { from: "src/popup", to: "../popup/" }
             ]
-        }),
-        new WebExtWebpackPlugin({
-            sourceDir: "./dist/"
         })
+        // ,
+        // new WebExtWebpackPlugin({
+        //     sourceDir: "./dist/"
+        // })
     ],
     resolve: {
         extensions: [".ts"]
