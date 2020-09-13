@@ -4,13 +4,15 @@ Let you block websites automatically, based on time.
 
 If you find any problems with this repository, just create an issue with the basic info needed. OR contact me @ [sahithyan2701@gmail.com](mailto:sahithyan2701@gmail.com)
 
+Note: I am looking for a better name for this extension. If you have any name ideas or suggestions, Let me know, at [issue#1](https://github.com/KSahithyan/auto-website-blocker-extension/issues/1).
+
 ## Features
 
-You can't use it yet.
+**You can't use it yet.**
 
 ## Contributing
 
-For now, star it.
+For now, The easiest thing to contribute is, starring this repository. So.. do it.
 
 And if you want to contribute to this extension, do anything to improve this project and explain what you did in your pull request.
 
