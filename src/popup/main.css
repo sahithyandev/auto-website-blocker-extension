@@ -5,8 +5,12 @@ body {
   min-height: 480px;
 }
 
-h3 {
-  margin-top: 0;
+.button {
+  margin-top: 8px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
 }
 
 .blocked-website-item {

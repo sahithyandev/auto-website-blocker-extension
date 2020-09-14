@@ -10,6 +10,17 @@ Note: I am looking for a better name for this extension. If you have any name id
 
 **You can't use it yet.**
 
+Features are in queue to be developed. Note that these are not confirmed to be released in the next release. These are just in the list of TODOs.
+
+- Permanent blocking for hosts
+- Block subroutes in a website
+- Block websites manually
+- Scheduled hosts blocking
+- Website Redirecting
+- Password protection
+- Block websites by words
+- Export blocked websites
+
 ## Contributing
 
 For now, The easiest thing to contribute is, starring this repository. So.. do it.

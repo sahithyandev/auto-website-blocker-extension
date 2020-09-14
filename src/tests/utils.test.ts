@@ -1,5 +1,5 @@
 import intern from 'intern';
-import { extractURL } from "./../utils";
+import { extractURL } from "../utils";
 
 const { describe, it } = intern.getPlugin('interface.bdd');
 const { expect } = intern.getPlugin('chai');

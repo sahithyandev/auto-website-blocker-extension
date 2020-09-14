@@ -8,6 +8,15 @@ const CONSTS = {
     blockedWebsiteTemplate: $('blocked-website-template')
 }
 
+function getExtractURL() {
+    // send data to the background and get the result
+}
+
+document.getElementById("current-website-url").innerHTML = getExtractURL(window.location.href);
+document.getElementById("block-current-website-button").addEventListener('click', event => {
+    console.log('ev', event);
+})
+
 /**
  * creates "A blocked website" block and adds it to the UI
  * @param {String} blockedWebsite 
@@ -29,6 +38,9 @@ browser.storage.local.get().then(s => {
     console.log('from popuip', s);
     if (s != undefined && Object.keys(s).length > 0) {
         CONSTS.container.append(...s["permanent-website-block"].map(createBlockedWebsite));
+    } else if (Object.keys(s).length == 0) {
+        CONSTS.container.innerHTML = 'No domains/hosts are blocked yet.'
     }
 })
+
 console.log('hiii');

@@ -2,7 +2,7 @@
  * Extract the absolute URL path to a general one
  * @param absolutePath The URL path to extract
  */
-export const extractURL = (absolutePath: string): string => {
+const extractURL = (absolutePath: string): string => {
     if (absolutePath == '') return '';
 
     let url = new URL(absolutePath);   
@@ -18,3 +18,5 @@ const extractHostname = (hostname: string): string[] => {
     let parts = hostname.split('.');
     return parts.slice(parts.length - 2, parts.length);
 }
+
+export { extractURL };

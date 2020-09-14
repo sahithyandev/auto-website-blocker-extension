@@ -104,7 +104,7 @@ browser.runtime.onInstalled.addListener(() => {
   console.log('onInstalled event');
 
   // for testing
-  browser.storage.local.set({[MenuID.PermanentWebsiteBlock]: ["*://*.facebook.com/*", "*://*.youtube.com/*"]})
+  // browser.storage.local.set({[MenuID.PermanentWebsiteBlock]: ["*://*.facebook.com/*", "*://*.youtube.com/*"]})
 
 
   browser.storage.local.get(MenuID.PermanentWebsiteBlock).then((value) => {
