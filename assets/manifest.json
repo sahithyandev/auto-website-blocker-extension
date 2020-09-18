@@ -16,6 +16,8 @@
         "<all_urls>",
         "webRequestBlocking",
         "storage",
-        "notifications"
+        "notifications",
+        "tabs",
+        "activeTab"
     ]
 }

@@ -118,4 +118,11 @@ browser.runtime.onInstalled.addListener(() => {
   })
 })
 
+browser.storage.onChanged.addListener(v => {
+  console.log(v);
+  if (v["permanent-website-block"]) {
+    storageObj["permanent-website-block"] = v["permanent-website-block"] as string[];
+  }
+})
+
 console.log('loadied');

@@ -8,13 +8,20 @@ const CONSTS = {
     blockedWebsiteTemplate: $('blocked-website-template')
 }
 
-function getExtractURL() {
-    // send data to the background and get the result
-}
+// string[]
+let blockedWebsites = [
 
-document.getElementById("current-website-url").innerHTML = getExtractURL(window.location.href);
+]
+
+browser.tabs.query({ active: true }).then(tabs => {
+    document.getElementById("current-website-url").innerHTML = extractURL(tabs[0].url);
+})
+
 document.getElementById("block-current-website-button").addEventListener('click', event => {
     console.log('ev', event);
+    let websiteURL = document.getElementById("current-website-url").innerHTML;
+    console.log(websiteURL);
+    blockWebsite(websiteURL);
 })
 
 /**
@@ -26,18 +33,36 @@ function createBlockedWebsite(blockedWebsite) {
     clone.querySelector(".website-url").innerHTML = blockedWebsite;
     let deleteBtn = clone.querySelector(".delete-button");
 
-    /** @todo Develop this delete functionality */
+    /** @important @todo Develop this delete functionality */
     deleteBtn.addEventListener('click', event => {
         console.log('pressed', event);
+
+        blockedWebsites = removeFromArr(blockedWebsites, document.querySelector(".website-url").innerHTML);
+        browser.storage.local.set({
+            "permanent-website-block": blockedWebsites
+        })
     })
 
     return clone;
 }
 
+/**
+ * @param {String} url URL of website to block
+ */
+function blockWebsite(url) {
+    blockedWebsites.push(url);
+
+    browser.storage.local.set({
+        "permanent-website-block": Array.from(new Set(blockedWebsites))
+    })
+    console.log(blockedWebsites);
+}
+
 browser.storage.local.get().then(s => {
     console.log('from popuip', s);
     if (s != undefined && Object.keys(s).length > 0) {
-        CONSTS.container.append(...s["permanent-website-block"].map(createBlockedWebsite));
+        blockedWebsites = s["permanent-website-block"];
+        CONSTS.container.append(...blockedWebsites.map(createBlockedWebsite));
     } else if (Object.keys(s).length == 0) {
         CONSTS.container.innerHTML = 'No domains/hosts are blocked yet.'
     }
