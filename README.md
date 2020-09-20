@@ -23,7 +23,7 @@ Features are in queue to be developed. Note that these are not confirmed to be r
 
 ## Contributing
 
-For now, The easiest thing to contribute is, starring this repository. So.. do it.
+For now, The easiest way of contributing to this repository is, by "starring" it. So.. do it.
 
 And if you want to contribute to this extension, do anything to improve this project and explain what you did in your pull request.
 

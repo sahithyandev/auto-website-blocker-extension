@@ -1,5 +1,5 @@
 /**
- * @param {String} id 
+ * @param {String} id ID of the element to select
  */
 const $ = id => document.getElementById(id);
 
@@ -9,9 +9,7 @@ const CONSTS = {
 }
 
 // string[]
-let blockedWebsites = [
-
-]
+let blockedWebsites = []
 
 browser.tabs.query({ active: true }).then(tabs => {
     document.getElementById("current-website-url").innerHTML = extractURL(tabs[0].url);
@@ -25,7 +23,7 @@ document.getElementById("block-current-website-button").addEventListener('click'
 })
 
 /**
- * creates "A blocked website" block and adds it to the UI
+ * Creates "A blocked website" block and adds it to the UI
  * @param {String} blockedWebsite 
  */
 function createBlockedWebsite(blockedWebsite) {
@@ -36,14 +34,20 @@ function createBlockedWebsite(blockedWebsite) {
     /** @important @todo Develop this delete functionality */
     deleteBtn.addEventListener('click', event => {
         console.log('pressed', event);
-
-        blockedWebsites = removeFromArr(blockedWebsites, document.querySelector(".website-url").innerHTML);
-        browser.storage.local.set({
-            "permanent-website-block": blockedWebsites
-        })
+        unblockWebsite(document.querySelector(".website-url").innerHTML);
     })
 
     return clone;
+}
+
+/**
+ * @param {String} url URL of website to unblock
+ */
+function unblockWebsite(url) {
+    blockedWebsites = removeFromArr(blockedWebsites, url);
+    browser.storage.local.set({
+        "permanent-website-block": blockedWebsites
+    })
 }
 
 /**
