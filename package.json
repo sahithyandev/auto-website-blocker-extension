@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && npm run pack",
     "dev": "webpack -w",
     "test-build": "rm -R dist && npm run build",
     "test": "intern",
-    "ext": "cd ./dist/ && web-ext run"
+    "ext": "cd ./dist/ && web-ext run",
+    "pack": "cd ./dist && zip -r ../release.zip ./"
   },
   "devDependencies": {
     "@ianwalter/web-ext-webpack-plugin": "^0.1.0",

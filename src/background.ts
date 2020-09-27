@@ -73,27 +73,27 @@ function removeFromBlockedWebsites(url: string) {
   console.log('after delete', storageObj);
 }
 
-browser.menus.create({
-  id: MenuID.PermanentWebsiteBlock,
-  title: "Block this website",
-  contexts: ["all"],
-  type: 'radio'
-})
+// browser.menus.create({
+//   id: MenuID.PermanentWebsiteBlock,
+//   title: "Block this website",
+//   contexts: ["all"],
+//   type: 'radio'
+// })
 
-// Listeners
+// // Listeners
 
-browser.menus.onClicked.addListener((info, tab) => {
-  console.log(info, tab);
-  if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
-    let url = extractURL(info.pageUrl);
-    addToBlockedWebsites(url);
+// browser.menus.onClicked.addListener((info, tab) => {
+//   console.log(info, tab);
+//   if (info.menuItemId == MenuID.PermanentWebsiteBlock) {
+//     let url = extractURL(info.pageUrl);
+//     addToBlockedWebsites(url);
     
-    // if (storageManager.isInArray(key, url)) {
-    //   storageManager.removeFromArray(key, url);
-    // }
-    // storageManager.addToArray(key, url);
-  }
-})
+//     // if (storageManager.isInArray(key, url)) {
+//     //   storageManager.removeFromArray(key, url);
+//     // }
+//     // storageManager.addToArray(key, url);
+//   }
+// })
 
 /** @todo Listen to websites that are blocked only */
 browser.webRequest.onBeforeRequest.addListener(checkRequest, {
@@ -105,7 +105,6 @@ browser.runtime.onInstalled.addListener(() => {
 
   // for testing
   // browser.storage.local.set({[MenuID.PermanentWebsiteBlock]: ["*://*.facebook.com/*", "*://*.youtube.com/*"]})
-
 
   browser.storage.local.get(MenuID.PermanentWebsiteBlock).then((value) => {
     console.log(value);
@@ -121,7 +120,7 @@ browser.runtime.onInstalled.addListener(() => {
 browser.storage.onChanged.addListener(v => {
   console.log(v);
   if (v["permanent-website-block"]) {
-    storageObj["permanent-website-block"] = v["permanent-website-block"] as string[];
+    storageObj["permanent-website-block"] = v["permanent-website-block"].newValue as string[];
   }
 })
 
